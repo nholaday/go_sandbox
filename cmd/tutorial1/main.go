@@ -20,4 +20,16 @@ func main(){
 
 	var myBool bool = true
 	fmt.Println(myBool)
+
+	// inferred type
+	var myInfString = "inferring a string"
+	myColonString := "inferred with colon shorthand"
+	fmt.Println(myInfString, myColonString)
+
+	var var1, var2 int32 = 1, 2
+	var3, var4 := 3, 4
+	fmt.Println(var1, var2, var3, var4)
+
+	const myConst string = "this is constant"
+	fmt.Println(myConst)
 }
