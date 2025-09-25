@@ -32,4 +32,25 @@ func main(){
 
 	const myConst string = "this is constant"
 	fmt.Println(myConst)
+
+	simplePrinter(myInfString)
+	var divideResult int = divider(5, 3)
+	fmt.Println(divideResult)
+	var result, remainder int = divideWithRemainder(5, 3)
+	fmt.Printf("result: %v, remainder: %v", result, remainder)
+}
+
+func simplePrinter(printValue string){
+	fmt.Println(printValue)
+}
+
+func divider(numerator int, denominator int) int {
+	var result int = numerator / denominator
+	return result
+}
+
+func divideWithRemainder(numerator int, denominator int) (int, int) {
+	var result int = numerator / denominator
+	var remainder int = numerator % denominator
+	return result, remainder
 }
