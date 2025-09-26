@@ -11,7 +11,7 @@ func main() {
 	var total uint = 1
 
 	fmt.Println("Welcome to LunaMath!  Press return to generate the next number")
-	for true {
+	for {
 		bufio.NewReader(os.Stdin).ReadBytes('\n')
 		fmt.Printf("counter: %v, total %v", counter, total)
 		fmt.Println(" -- Press return again to generate the next number")
