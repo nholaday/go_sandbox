@@ -1,6 +1,8 @@
 package main
 
 import "fmt"
+import "errors"
+
 func main(){
 	var myNum int
 	myNum = 15
@@ -44,6 +46,9 @@ func main(){
 		fmt.Printf(err.Error())
 	}
 	fmt.Printf("result: %v, remainder: %v", result, remainder)
+	
+	arrayPlayground()
+	slicePlayground()
 }
 
 func simplePrinter(printValue string){
@@ -56,7 +61,7 @@ func divider(numerator int, denominator int) int {
 }
 
 func divideWithRemainder(numerator int, denominator int) (int, int, error) {
-	var err error  # initializes to nil
+	var err error  // initializes to nil
 	if denominator == 0 {
 		err = errors.New("Cannot Divide by Zero")
 		return 0, 0, err
@@ -64,4 +69,36 @@ func divideWithRemainder(numerator int, denominator int) (int, int, error) {
 	var result int = numerator / denominator
 	var remainder int = numerator % denominator
 	return result, remainder, err
+}
+
+func arrayPlayground() {
+	var intArr [3]int32 // [0,0,0]
+	// memory location
+	fmt.Println(&intArr[0])
+	var intArr2 = [3]int32{1,2,3}
+	// equivalent shorthands
+	// intArr := [3]int32{1,2,3}
+	// intArr := [...]int32{1,2,3}
+	fmt.Println(intArr2)
+}
+
+func slicePlayground() {
+	// slice are wrappers on arrays to give more functionality
+	// with length and capacity
+	var intSlice []int32 = []int32{4,5,6}
+	fmt.Println(intSlice)
+	intSlice = append(intSlice, 7)
+	fmt.Println(intSlice)
+	fmt.Printf("length: %v, cap: %v\n", len(intSlice), cap(intSlice))
+	
+	// when going over the limit of the capacity it will create a
+	// new array with a larger capacity.  Predefine capacity for better performance
+	
+	var intSlice2 = make([]int32, 5, 15)
+	fmt.Println(intSlice2)
+	fmt.Printf("length: %v, cap: %v\n", len(intSlice2), cap(intSlice2))
+	
+	// appending multiple values with spread operator
+	intSlice = append(intSlice, intSlice2...)
+	fmt.Println(intSlice)
 }
