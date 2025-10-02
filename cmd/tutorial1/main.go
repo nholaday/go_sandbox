@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
-import "errors"
+import (
+	"fmt"
+	"errors"
+	"strings"
+)
 
 func main(){
 	var myNum int
@@ -45,10 +48,12 @@ func main(){
 	if err != nil {
 		fmt.Printf(err.Error())
 	}
-	fmt.Printf("result: %v, remainder: %v", result, remainder)
+	fmt.Printf("result: %v, remainder: %v\n", result, remainder)
 	
 	arrayPlayground()
 	slicePlayground()
+	mapPlayground()
+	stringPlayground()
 }
 
 func simplePrinter(printValue string){
@@ -72,6 +77,7 @@ func divideWithRemainder(numerator int, denominator int) (int, int, error) {
 }
 
 func arrayPlayground() {
+	fmt.Println("############# Arrays ###############")
 	var intArr [3]int32 // [0,0,0]
 	// memory location
 	fmt.Println(&intArr[0])
@@ -83,6 +89,7 @@ func arrayPlayground() {
 }
 
 func slicePlayground() {
+	fmt.Println("############# Slices ###############")
 	// slice are wrappers on arrays to give more functionality
 	// with length and capacity
 	var intSlice []int32 = []int32{4,5,6}
@@ -101,4 +108,85 @@ func slicePlayground() {
 	// appending multiple values with spread operator
 	intSlice = append(intSlice, intSlice2...)
 	fmt.Println(intSlice)
+	
+	// LOOPS
+	// "for in" syntax
+	for idx, val := range intSlice{
+		fmt.Printf("idx: %v, val: %v\n", idx, val)
+	}
+	
+	// "while" loops
+	var i int = 0
+	for i < 10 {
+		i++;
+	}
+	
+	// goes until break is hit
+	j := 0;
+	for {
+		j++
+		if j == 10 {
+			break
+		}
+	}
+	
+	// C++ Syntax: initialization, condition, post
+	for i:=0; i<10; i++ {
+		fmt.Printf("%v, ", i)
+	}
+	fmt.Println("")
+}
+
+func mapPlayground() {
+	fmt.Println("############# Maps ###############")
+	
+	var myMap map[string]uint8
+	fmt.Println(myMap)
+	// or initialize like this
+	var myMap2 = map[string]uint8{"Jocca": 19, "Smocca": 33}
+	fmt.Println(myMap2["Jocca"])
+	// if not found will not raise a KeyError, instead will return default value
+	// use the second return param to get if key found or not
+	fmt.Println(myMap2["Samantha"])
+	var age, keyFound = myMap2["Psyduck"]
+	fmt.Printf("age: %v, keyFound: %v\n", age, keyFound)
+	
+	delete(myMap2, "Jocca")
+	myMap2["Jerry"] = 56
+	
+	// LOOPS
+	// "for in" syntax
+	for name := range myMap2 {
+		fmt.Printf("Name: %v\n", name)
+	}
+	
+	for key, val := range myMap2 {
+		fmt.Printf("Name: %v, Age: %v\n", key, val)
+	}
+}
+
+func stringPlayground() {
+	// Go uses utf-8 encoding for characters
+	// utf-8 has variable byte length representing characters unlike ASCII
+	var myString = "Résumé"
+	// value will be the utf-8 position of the character
+	var indexed = myString[1]
+	fmt.Printf("%v, %T, length: %v\n", indexed, indexed, len(myString))
+
+	// é is length 2 bytes so length of the total array will be 8 instead of 6
+	// to avoid this hassle cast to an array of runes
+	var myString2 = []rune("Résumé")
+	var myRune = myString2[1]
+	fmt.Printf("%v, %T, length: %v\n", myRune, myRune, len(myString2))
+	
+	// strings are immutable in Go, can't modify
+	// to deal with this use the strings package
+	var strSlice = []string{"n", "a", "m", "e"}
+	var strBuilder strings.Builder
+	for i := range strSlice{
+		strBuilder.WriteString(strSlice[i])
+	}
+	// waits until operations are finished before creating a real string
+	var catStr = strBuilder.String()
+	fmt.Printf("%v\n", catStr)
 }
