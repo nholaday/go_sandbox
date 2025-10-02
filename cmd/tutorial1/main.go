@@ -33,10 +33,16 @@ func main(){
 	const myConst string = "this is constant"
 	fmt.Println(myConst)
 
+	// Functions
 	simplePrinter(myInfString)
 	var divideResult int = divider(5, 3)
 	fmt.Println(divideResult)
-	var result, remainder int = divideWithRemainder(5, 3)
+	var result, remainder, err = divideWithRemainder(5, 3)
+	
+	// Error Handling
+	if err != nil {
+		fmt.Printf(err.Error())
+	}
 	fmt.Printf("result: %v, remainder: %v", result, remainder)
 }
 
@@ -49,8 +55,13 @@ func divider(numerator int, denominator int) int {
 	return result
 }
 
-func divideWithRemainder(numerator int, denominator int) (int, int) {
+func divideWithRemainder(numerator int, denominator int) (int, int, error) {
+	var err error  # initializes to nil
+	if denominator == 0 {
+		err = errors.New("Cannot Divide by Zero")
+		return 0, 0, err
+	}
 	var result int = numerator / denominator
 	var remainder int = numerator % denominator
-	return result, remainder
+	return result, remainder, err
 }
