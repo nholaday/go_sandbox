@@ -26,6 +26,22 @@ func (s student) yearsLeft() uint8 {
 	return 4 - s.year
 }
 
+type teacher struct {
+	name string
+}
+
+func (t teacher) yearsLeft() uint8 {
+	return 100
+}
+
+type person interface {
+	yearsLeft() uint8
+}
+
+func getMonthsLeft(p person) uint8 {
+	return p.yearsLeft() * 12
+}
+
 func main(){
 	// uninitialized will have default type values
 	// "", 0, ""
@@ -44,4 +60,10 @@ func main(){
 		gallons uint8
 	}{25,15}
 	fmt.Println(myEngine.mpg, myEngine.gallons)
+	
+	// Interfaces can be like an abstract base class
+	// For this interface to work all subclasses just need a yearsLeft method
+	var castle teacher = teacher{"Ms. Castle"}
+	fmt.Println(getMonthsLeft(mary))
+	fmt.Println(getMonthsLeft(castle))
 }
